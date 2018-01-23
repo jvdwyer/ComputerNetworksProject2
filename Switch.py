@@ -36,6 +36,15 @@ class Switch(StpSwitch):
         
         #TODO: Define a data structure to keep track of which links are part of / not part of the spanning tree.
 
+        self.distanceToRoot = 0
+        self.span = {}
+        self.parent = None
+        self.rootID = self.switchID
+
+
+        for x in self.links:
+             self.span[x] = False
+
     def send_initial_messages(self):
         #TODO: This function needs to create and send the initial messages from this switch.
         #      Messages are sent via the superclass method send_message(Message msg) - see Message.py.
@@ -61,4 +70,9 @@ class Switch(StpSwitch):
         #      for switch 2 would have the following text:
         #      2 - 1, 2 - 3
         #      A full example of a valid output file is included (sample_output.txt) with the project skeleton.
-        return "switch logstring"
+
+    myLogString = []
+    for x in sorted(self.span.iterkeys()):
+         if self.span[x] == True:
+              myLogString.append('{} - {}'.format(self.switchID, x))
+    return ', '.join(myLogString)
