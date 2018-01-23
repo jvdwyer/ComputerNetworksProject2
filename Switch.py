@@ -74,5 +74,5 @@ class Switch(StpSwitch):
     myLogString = []
     for x in sorted(self.activeLinks.iterkeys()):
          if self.activeLinks[x] == True:
-              myLogString.append('{} - {}'.format(self.switchID, x))
+              myLogString.append('%d - %d' % (self.switchID, x))
     return ', '.join(myLogString)
