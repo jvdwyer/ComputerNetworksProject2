@@ -40,6 +40,8 @@ class Switch(StpSwitch):
         #TODO: This function needs to create and send the initial messages from this switch.
         #      Messages are sent via the superclass method send_message(Message msg) - see Message.py.
 	#      Use self.send_message(msg) to send this.  DO NOT use self.topology.send_message(msg)
+        for node in self.links:
+             self.send_message(Message(self.switchID, 0, self.switchID, node, False))
         return
         
     def process_message(self, message):
