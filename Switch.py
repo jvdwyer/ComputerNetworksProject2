@@ -37,13 +37,13 @@ class Switch(StpSwitch):
         #TODO: Define a data structure to keep track of which links are part of / not part of the spanning tree.
 
         self.distance = 0
-        self.span = {}
-        self.parent = None
+        self.activeLinks = {}
+        self.pathThrough = None
         self.root = self.switchID
 
 
         for x in self.links:
-             self.span[x] = False
+             self.activeLinks[x] = False
 
     def send_initial_messages(self):
         #TODO: This function needs to create and send the initial messages from this switch.
