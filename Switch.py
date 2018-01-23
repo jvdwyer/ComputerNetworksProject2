@@ -72,7 +72,7 @@ class Switch(StpSwitch):
         #      A full example of a valid output file is included (sample_output.txt) with the project skeleton.
 
     myLogString = []
-    for x in sorted(self.span.iterkeys()):
-         if self.span[x] == True:
+    for x in sorted(self.activeLinks.iterkeys()):
+         if self.activeLinks[x] == True:
               myLogString.append('{} - {}'.format(self.switchID, x))
     return ', '.join(myLogString)
