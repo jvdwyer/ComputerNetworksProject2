@@ -36,10 +36,10 @@ class Switch(StpSwitch):
         
         #TODO: Define a data structure to keep track of which links are part of / not part of the spanning tree.
 
-        self.distanceToRoot = 0
+        self.distance = 0
         self.span = {}
         self.parent = None
-        self.rootID = self.switchID
+        self.root = self.switchID
 
 
         for x in self.links:
