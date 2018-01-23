@@ -56,6 +56,27 @@ class Switch(StpSwitch):
     def process_message(self, message):
         #TODO: This function needs to accept an incoming message and process it accordingly.
         #      This function is called every time the switch receives a new message.
+
+        if message.root < self.root or (message.root == self.root and message.distance + 1 < self.distance):
+             self.root = message.root
+             self.distance = message.distance + 1
+             self.pathThrough = message.origin
+             for x in self.links:
+                  if x == message.origin:
+                       self.activeLinks[x] = True
+                       self.send_message(Message(self.root, self.distance, self.switchID, x, True))
+                  else:
+                       self.activeLinks[x] = False
+                       self.send_message(Message(self.root, self.distance, self.switchID, x, False))
+
+        elif message.root == self.root and message.distance + 1 == self.distance and self.pathThrough and message.origin < self.pathThrough:
+             self.activeLinks[self.pathThrough] = False
+             self.send_message(Message(self.root, self.distance, self.switchID, self.pathThrough, False))
+             self.pathThrough = message.origin
+             self.send_message(Message(self.root, self.distance, self.switchID, message.origin, True))
+
+        else:
+             self.activeLinks[message.origin] = message.pathThrough  
         return
         
     def generate_logstring(self):
@@ -71,8 +92,8 @@ class Switch(StpSwitch):
         #      2 - 1, 2 - 3
         #      A full example of a valid output file is included (sample_output.txt) with the project skeleton.
 
-    myLogString = []
-    for x in sorted(self.activeLinks.iterkeys()):
-         if self.activeLinks[x] == True:
-              myLogString.append('%d - %d' % (self.switchID, x))
-    return ', '.join(myLogString)
+        myLogString = []
+        for x in sorted(self.activeLinks.iterkeys()):
+             if self.activeLinks[x] == True:
+                  myLogString.append('%d - %d' % (self.switchID, x))
+        return ', '.join(myLogString)
