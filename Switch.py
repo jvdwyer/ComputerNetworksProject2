@@ -73,6 +73,7 @@ class Switch(StpSwitch):
              self.activeLinks[self.pathThrough] = False
              self.send_message(Message(self.root, self.distance, self.switchID, self.pathThrough, False))
              self.pathThrough = message.origin
+	     self.activeLinks[message.origin] = True
              self.send_message(Message(self.root, self.distance, self.switchID, message.origin, True))
 
         else:
